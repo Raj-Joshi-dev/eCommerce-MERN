@@ -1,0 +1,6 @@
+# MERN Bootcamp 
+
+1. Start and Stop MongoDB (docs: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#install-mongodb-community-edition)
+
+- brew services start mongodb-community 
+- brew services stop mongodb-community 

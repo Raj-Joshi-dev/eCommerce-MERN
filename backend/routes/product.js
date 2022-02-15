@@ -8,7 +8,8 @@ const {
   photo,
   removeProduct,
   updateProduct,
-  getAllProducts
+  getAllProducts,
+  getAllUniqueCategories
 } = require("../controllers/productController");
 
 const {
@@ -57,5 +58,7 @@ router.put(
 
 // Listing Route
 router.get("/products", getAllProducts)
+// Alternative to get all distinct categories
+router.get("/products/categories", getAllUniqueCategories)
 
 module.exports = router;

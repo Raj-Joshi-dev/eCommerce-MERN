@@ -2,7 +2,6 @@ const Product = require("../models/product");
 const formidable = require("formidable");
 const _ = require("lodash");
 const fs = require("fs");
-const { sortBy } = require("lodash");
 
 exports.getProductbyId = (req, res, next, id) => {
   Product.findById(id)
@@ -160,6 +159,18 @@ exports.photo = (req, res, next) => {
   }
   next();
 };
+
+// Alternative method to get all distinct categories
+exports.getAllUniqueCategories = (req, res) => {
+  Product.distinct("category", {}, (err, category) => {
+    if (err) {
+      return res.status(400).json({
+        error: "No category found."
+      })
+    }
+    res.json(category);
+  })
+}
 
 // Middleware to update inventory
 exports.updateStock = (req, res, next) => {

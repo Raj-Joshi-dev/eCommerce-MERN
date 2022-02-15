@@ -11,4 +11,17 @@ const {
 } = require("../controllers/userController");
 
 const {} = require("../controllers/productController");
-const {} = require("../controllers/orderController");
+const {getOrderById} = require("../controllers/orderController");
+
+// Params
+router.param("userId", getUserbyId)
+router.param("orderId", getOrderById)
+
+
+// Actual Routes
+
+// Create
+
+// Read
+
+module.exports = router;

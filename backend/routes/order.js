@@ -11,7 +11,11 @@ const {
 } = require("../controllers/userController");
 
 const { updateStock } = require("../controllers/productController");
-const { getOrderById, createOrder } = require("../controllers/orderController");
+const {
+  getOrderById,
+  createOrder,
+  getAllOrders,
+} = require("../controllers/orderController");
 
 // Params
 router.param("userId", getUserbyId);
@@ -29,5 +33,12 @@ router.post(
 );
 
 // Read
+router.get(
+  "/order/all/:userId",
+  isSignedIn,
+  isAuthenticated,
+  isAdmin,
+  getAllOrders
+);
 
 module.exports = router;

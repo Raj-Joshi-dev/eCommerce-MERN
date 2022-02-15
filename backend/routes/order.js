@@ -10,17 +10,23 @@ const {
   pushOrderInPurchaseList,
 } = require("../controllers/userController");
 
-const {} = require("../controllers/productController");
-const {getOrderById} = require("../controllers/orderController");
+const { updateStock } = require("../controllers/productController");
+const { getOrderById, createOrder } = require("../controllers/orderController");
 
 // Params
-router.param("userId", getUserbyId)
-router.param("orderId", getOrderById)
-
+router.param("userId", getUserbyId);
+router.param("orderId", getOrderById);
 
 // Actual Routes
-
 // Create
+router.post(
+  "/order/create/:userId",
+  isSignedIn,
+  isAuthenticated,
+  pushOrderInPurchaseList,
+  updateStock,
+  createOrder
+);
 
 // Read
 

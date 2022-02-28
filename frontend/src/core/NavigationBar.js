@@ -27,7 +27,8 @@ const NavigationBar = ({ history }) => (
           Cart
         </Link>
       </li>
-      <li className="nav-item">
+      {isAuthenticated() && isAuthenticated().user.role === 0 && (
+        <li className="nav-item">
         <Link
           style={currentTab(history, "/user/dashboard")}
           className="nav-link"
@@ -36,7 +37,9 @@ const NavigationBar = ({ history }) => (
           User Dashboard
         </Link>
       </li>
-      <li className="nav-item">
+      )}
+      {isAuthenticated() && isAuthenticated().user.role === 1 && (
+        <li className="nav-item">
         <Link
           style={currentTab(history, "/admin/dashboard")}
           className="nav-link"
@@ -45,6 +48,7 @@ const NavigationBar = ({ history }) => (
           Admin Dashboard
         </Link>
       </li>
+      )}
       {!isAuthenticated() && (
         <Fragment>
           <li className="nav-item">

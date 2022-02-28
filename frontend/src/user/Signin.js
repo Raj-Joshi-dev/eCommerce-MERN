@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import Base from "../core/Base";
 
 import { signin, authenticate, isAuthenticated } from "../auth/helper";
@@ -40,7 +40,6 @@ const SignIn = () => {
       .catch(console.log("SigIn Request Failed!"));
   };
 
-  //TODO: do a redirect here.
   const performRedirect = () => {
     if (didRedirect) {
       if (user && user.role === 1) {

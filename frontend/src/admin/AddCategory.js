@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import Base from "../core/Base";
 import { isAuthenticated } from "../auth/helper";
 import { Link } from "react-router-dom";
+import { createCategory } from "./helper/adminapicall";
 
 export default function AddCategory() {
-  const [name, setName] = useState("initialState");
+  const [name, setName] = useState("");
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -18,6 +19,40 @@ export default function AddCategory() {
     </div>
   );
 
+  const handleChange = (event) => {
+    setError("");
+    setName(event.target.value);
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    setError("");
+    setSuccess(false);
+
+    //backend request is fired
+    createCategory(user._id, token, { name }).then((data) => {
+      if (data.error) {
+        setError(true);
+      } else {
+        setError("");
+        setSuccess(true);
+        setName("");
+      }
+    });
+  };
+
+  const successMessage = () => {
+    if (success) {
+      return <h4 className="text-success">Category created successfully</h4>;
+    }
+  };
+
+  const warningMessage = () => {
+    if (error) {
+      return <h4 className="text-danger">Failed to create Category</h4>;
+    }
+  };
+
   const CategoryForm = () => (
     <form>
       <div className="form-group">
@@ -25,11 +60,15 @@ export default function AddCategory() {
         <input
           type="text"
           className="form-control my-3"
+          onChange={handleChange}
+          value={name}
           autoFocus
           required
           placeholder="Eg: Summer"
         />
-        <button className="btn btn-outline-info">Create Category</button>
+        <button onClick={onSubmit} className="btn btn-outline-info">
+          Create Category
+        </button>
       </div>
     </form>
   );
@@ -43,7 +82,10 @@ export default function AddCategory() {
       <div className="row bg-white rounded">
         <div className="col-md-8 offset-md-2">
           <h1>
-            {CategoryForm()} {goBack()}
+            {CategoryForm()} 
+            {successMessage()}
+            {warningMessage()}
+            {goBack()}
           </h1>
         </div>
       </div>

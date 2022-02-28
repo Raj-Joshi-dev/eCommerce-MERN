@@ -8,7 +8,7 @@ import {
 } from "./helper/adminapicall";
 import { isAuthenticated } from "../auth/helper";
 
-export default function UpdateProduct() {
+export default function UpdateProduct({ match }) {
   const { user, token } = isAuthenticated();
 
   const [values, setValues] = useState({
@@ -46,6 +46,7 @@ export default function UpdateProduct() {
       if (data.error) {
         setValues({ ...values, error: data.error });
       } else {
+        preloadCategories();
         setValues({
           ...values,
           name: data.name,
@@ -59,16 +60,28 @@ export default function UpdateProduct() {
     });
   };
 
-  useEffect(() => {
-    preload();
-  }, []);
+  const preloadCategories = () => {
+    getCategories().then((data) => {
+      if (data.error) {
+        setValues({ ...values, error: data.error });
+      } else {
+        setValues({
+          categories: data,
+          formData: new FormData(),
+        });
+      }
+    });
+  };
 
+  useEffect(() => {
+    preload(match.params.productId);
+  }, []);
 
   // TODO: Work on it
   const onSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, error: "", loading: true });
-    updateProduct(user._id, token, formData)
+    updateProduct(match.params.productId, user._id, token, formData)
       .then((data) => {
         if (data.error) {
           setValues({ ...values, error: data.error });
@@ -100,7 +113,7 @@ export default function UpdateProduct() {
       className="alert alert-success mt-3"
       style={{ display: createdProduct ? "" : "none" }}
     >
-      <h4>{createdProduct} created successfully</h4>
+      <h4>{createdProduct} updated successfully</h4>
     </div>
   );
 
@@ -175,7 +188,7 @@ export default function UpdateProduct() {
         onClick={onSubmit}
         className="btn btn-outline-success mb-3"
       >
-        Create Product
+        Update Product
       </button>
     </form>
   );

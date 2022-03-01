@@ -61,6 +61,7 @@ export default function AddProduct() {
         } else {
           setValues({
             ...values,
+            getRedirect: true,
             name: "",
             description: "",
             price: "",
@@ -71,8 +72,18 @@ export default function AddProduct() {
             createdProduct: data.name,
           });
         }
+        console.log(getRedirect);
       })
       .catch();
+  };
+
+  const performRedirect = () => {
+    if (getRedirect === true) {
+      //  return <Redirect to="/admin/dashboard" />;
+      setTimeout(function () {
+        window.location = "/admin/dashboard";
+      }, 2000);
+    }
   };
 
   const handleChange = (name) => (event) => {
@@ -87,6 +98,15 @@ export default function AddProduct() {
       style={{ display: createdProduct ? "" : "none" }}
     >
       <h4>{createdProduct} created successfully</h4>
+    </div>
+  );
+
+  const warningMessage = () => (
+    <div
+      className="alert alert-danger mt-3"
+      style={{ display: error ? "" : "none" }}
+    >
+      <h4>Product creation failed!</h4>
     </div>
   );
 
@@ -177,7 +197,9 @@ export default function AddProduct() {
       </Link>
       <div className="row bg-dark text-white rounded">
         <div className="col-md-8 offset-md-2">
+          {warningMessage()}
           {successMessage()}
+          {performRedirect()}
           {createProductForm()}
         </div>
       </div>

@@ -9,7 +9,7 @@ export default function Cart({
   removeFromCart = false,
 }) {
   const [redirect, setRedirect] = useState(false);
-  const [count, setCount] = useState(product.count)
+  const [count, setCount] = useState(product.count);
 
   const cardTitle = product ? product.name : "A photo from pexels";
   const cardDescription = product ? product.description : "Default description";

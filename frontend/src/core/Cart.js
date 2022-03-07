@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import { addItemToCart } from "./helper/cartHelper";
+import { addItemToCart, removeItemFromCart } from "./helper/cartHelper";
 import ImageHelper from "./helper/ImageHelper";
 
 export default function Cart({
   product,
   addtoCart = true,
   removeFromCart = false,
+  // Anonymous function
+  setReload = (f) => f,
+  // setReload = function(f){return f},
+  reload = undefined,
 }) {
   const [redirect, setRedirect] = useState(false);
   const [count, setCount] = useState(product.count);
@@ -42,7 +46,10 @@ export default function Cart({
     return (
       removeFromCart && (
         <button
-          onClick={() => {}}
+          onClick={() => {
+            removeItemFromCart(product._id);
+            setReload(!reload);
+          }}
           className="btn btn-block btn-outline-danger mt-2 mb-2"
         >
           Remove from cart

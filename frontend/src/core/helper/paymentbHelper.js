@@ -6,7 +6,7 @@ export const getmeToken = (userId, token) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: "Bearer ${token}",
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((response) => {
@@ -17,16 +17,16 @@ export const getmeToken = (userId, token) => {
 
 export const processPayment = (userId, token, paymentInfo) => {
   return fetch(`${API}/payment/braintree/${userId}`, {
-    method: "GET",
+    method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: "Bearer ${token}",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(paymentInfo),
   })
-    .then((response) => {
-      return response.json();
+    .then((reponse) => {
+      return reponse.json();
     })
     .catch((err) => console.log(err));
 };
